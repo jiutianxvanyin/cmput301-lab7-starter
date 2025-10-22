@@ -65,4 +65,29 @@ public class MainActivityTest {
         onData(is(instanceOf(String.class))).inAdapterView(withId(R.id.city_list
         )).atPosition(0).check(matches((withText("Edmonton"))));
     }
+    @Test
+    public void testActivitySwitch() {
+        onData(org.hamcrest.Matchers.anything()).inAdapterView(withId(R.id.city_list))
+                .atPosition(0).perform(click());
+        onView(withId(R.id.text_city_name))
+                .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testCityNameConsistency() {
+        String expectedCity = "Edmonton";
+        onData(org.hamcrest.Matchers.anything()).inAdapterView(withId(R.id.city_list))
+                .atPosition(0).perform(click());
+        onView(withId(R.id.text_city_name))
+                .check(matches(withText(expectedCity)));
+    }
+
+    @Test
+    public void testBackButton() {
+        onData(org.hamcrest.Matchers.anything()).inAdapterView(withId(R.id.city_list))
+                .atPosition(0).perform(click());
+        onView(withId(R.id.button_back)).perform(click());
+        onView(withId(R.id.city_list))
+                .check(matches(isDisplayed()));
+    }
 }
